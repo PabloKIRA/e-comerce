@@ -1,30 +1,22 @@
-import './App.css'
-import { Button } from './assets/components/Button'
-import { ItemCount } from './components/ItemCount/ItemCount'
-import ItemListContainer from './components/ItemListContainer'
-import NavBar from './components/NavBar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ItemDetailContainer from './components/ItemDetailContainer'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import ItemListContainer from './components/ItemListContainer';
+import ItemDetailContainer from './components/ItemDetailContainer';
+import NotFound from './components/NotFound';
 
-export function App() {
-
+function App() {
   return (
-    <>
-
     <BrowserRouter>
-      <NavBar/>
+      <NavBar />
       <Routes>
-        <Route path='/' element={ <ItemListContainer greeting="hola" />}/>
-        <Route path='/categoria/:categoria' element={ <ItemListContainer greeting="hola" />}/>
-        <Route path='/detalle/:id' element={<ItemDetailContainer/>} />
-        <Route path='*' element={<h1>Ey! te perdiste, volve al inicio y compra!</h1>} /> 
+        <Route path="/" element={<ItemListContainer greeting="hola" />} />
+        <Route path="categoria/:categoria" element={<ItemListContainer />} />
+        <Route path="detalle/:id" element={<ItemDetailContainer />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-
     </BrowserRouter>
-
-
-    </>
-  )
-
+  );
 }
 
+export default App;

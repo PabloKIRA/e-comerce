@@ -1,42 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from './Button'
-import { getProducts } from '../asyncmock.js'
-import { ItemList } from './ItemList'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { getProducts } from '../asyncmock.js';
+import { ItemList } from './ItemList';
+import { useParams } from 'react-router-dom';
 
+export function ItemListContainer() {
+  const { categoria } = useParams();
 
-const ItemListContainer = ({greeting}) => {
-  const [items , setItems] = useState([])
-  const [cargando , setCargando ] = useState(true)
-
-  const { categoria } = useParams()
- 
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setCargando(true)
-    if(categoria) {
-      getProducts().then(prods => setItems(prods.filter(e => e.categoria === categoria)))
-      .catch(err => err)
-      .finally(() => setCargando(false))
-    }else{
-      getProducts().then(prods => setItems(prods))
-      .catch(err => err)
-      .finally(() => setCargando(false))
-    }
+    const fetchProducts = async () => {
+      const data = await getProducts(categoria);
+      setProducts(data);
+    };
 
-  }, [categoria])
+    fetchProducts();
+  }, [categoria]);
 
-  if(cargando){
-    return (
-      <h3>cargando...</h3>
-    )
-  }
-  
   return (
-    <div className='catalogo'>
-      <ItemList items={items}/>
+    <div>
+      <h1>Productos</h1>
+      <ItemList products={products} />
     </div>
-  )
+  );
 }
-
-export default ItemListContainer

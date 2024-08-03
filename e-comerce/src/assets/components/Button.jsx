@@ -1,10 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { Button } from './Button';
 
+const App = () => {
+  const handleClick = () => {
+    console.log('Button clicked!');
+  };
 
-export const Button = (props) => {
+  return (
+    <div>
+      <Button color="blue" funcion={handleClick}>
+        Click me
+      </Button>
+    </div>
+  );
+};
 
-
-    return (
-        <button style={{backgroundColor: props.color}} onClick={props.funcion} > {props.children}</button>
-    )
-}
+export default App;
