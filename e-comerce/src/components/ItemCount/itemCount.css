@@ -4,4 +4,7 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    background-color: #5fdab1;
+    
 }

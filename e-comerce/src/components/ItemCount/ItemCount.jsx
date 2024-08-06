@@ -18,7 +18,7 @@ export const Item = ({ producto }) => {
       <p>{producto.categoria}</p>
       <img src={producto.image} alt="" />
       <Button color="blue" funcion={mostrarDetalles}> 
-        <Link to={`/detalle/${producto.id}`}>Ver Detalles </Link> 
+        <Link to={`/detalle/${producto.id}`}>Ver Mas </Link> 
       </Button>
       {
         isVisible ? <ItemDetailContainer id={producto.id} /> : <p>dale clickea el boton</p>
