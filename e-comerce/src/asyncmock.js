@@ -4,9 +4,8 @@ const items = [
         precio:30000,
         stock: 10,
         categoria: "mate",
-       
+        image:"https://acdn.mitiendanube.com/stores/635/133/products/img_75521-4531382075931ee0a616723175999395-640-0.jpg"
     },
-    
     {   id: 2,
         nombre:"zapato",
         precio:3000,

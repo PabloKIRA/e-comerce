@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ItemCount } from './ItemCount/ItemCount'
 import { Button } from './Button'
 import ItemDetailContainer from './ItemDetailContainer'
 import { Link } from 'react-router-dom'
