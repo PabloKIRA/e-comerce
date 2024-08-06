@@ -4,7 +4,6 @@ import ItemCount from './components/ItemCount/Itemcount';
 import ItemListContainer from './components/ItemListContainer'
 import NavBar from './components/NavBar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-
 import PostsContainer from './components/PostsContainer'
 import ItemDetailContainer from './components/ItemDetailContainer'
 
