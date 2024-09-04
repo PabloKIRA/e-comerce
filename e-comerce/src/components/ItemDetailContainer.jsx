@@ -1,54 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { getProductById } from '../asyncmock'
 import { useParams } from 'react-router-dom'
+import ItemDetail from './ItemDetail'
+import { db } from '../servicios/firebaseConfig'
+import { getDoc, doc} from 'firebase/firestore'
 
-const ItemDetailContainer = () => {
-    const [prod, setProd] =useState({})
-    const [cargando, setCargando] = useState(true)
+export const ItemDetailContainer = () => {
+  const [prod, setProd] = useState({})
+  const [cargando, setCargando] = useState(true)
 
-    const {id} = useParams()
+  const { id } = useParams()
 
-    useEffect(()=>{ 
-      setCargando(true)
-        
-      getProductById(id)
-      .then(res => {
-        setProd(res)
-        setCargando(false)
-    })
-    }, [id])
+  useEffect(() => {
+    setCargando(true)
 
-
-    const mostrarSiguiente = () => {  
-      setId(id +1)
-    }
-    const mostrarAnterior = () => {  
-      setId(id -1)
-    }
+    // getProductById(id)
+    //   .then(res => {
+    //     setProd(res)
+    //     setCargando(false)
+    //   })
+    const productRef = doc(db, "productos", id)
+    getDoc(productRef).then(snapshot => {
+      setProd(snapshot.data())      
+    }).finally(setCargando(false))
+    
+  }, [id])
 
 
-    console.log(id)
 
-    if(cargando){
-      return(
-        <h1>Cargando....</h1>
-      )
-    }
+
+  console.log(id)
+
+  if (cargando) {
+    return (
+      <h1>Cargando....</h1>
+    )
+  }
 
   return (
-    <div className='cardReal'>
-      
-     <h3>
-       {prod.nombre}
-      </h3>
-      <img src={prod.image} alt="" />
+    <>
+      {prod &&
+        <ItemDetail prod={prod} />
+      }
+    </>
 
-    <p>{prod.precio}</p>
-       
-       <button onClick={mostrarSiguiente}> ver siguiente</button>
-       <button onClick={mostrarAnterior}> ver anterior</button>
-    </div>
+
   )
 }
-
-export default ItemDetailContainer

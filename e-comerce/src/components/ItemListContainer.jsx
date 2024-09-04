@@ -1,42 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from './Button'
-import { getProducts } from '../asyncmock'
-import { ItemList } from './ItemList'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { ItemList } from './ItemList';
+import { getProducts } from '../asyncmock'; // Importa correctamente desde tu mock
+import { useParams } from 'react-router-dom';
 
-
-const ItemListContainer = ({greeting}) => {
-  const [items , setItems] = useState([])
-  const [cargando , setCargando ] = useState(true)
-
-  const { categoria } = useParams()
- 
+const ItemListContainer = ({ greeting }) => {
+  const [items, setItems] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const { categoria } = useParams();
 
   useEffect(() => {
-    setCargando(true)
-    if(categoria) {
-      getProducts().then(prods => setItems(prods.filter(e => e.categoria === categoria)))
-      .catch(err => err)
-      .finally(() => setCargando(false))
-    }else{
-      getProducts().then(prods => setItems(prods))
-      .catch(err => err)
-      .finally(() => setCargando(false))
-    }
+    setCargando(true);
 
-  }, [categoria])
+    // Llama a getProducts si no estás filtrando por categoría
+    getProducts()
+      .then((productos) => {
+        // Filtra productos por categoría si existe
+        if (categoria) {
+          const productosFiltrados = productos.filter(
+            (producto) => producto.categoria === categoria
+          );
+          setItems(productosFiltrados);
+        } else {
+          setItems(productos);
+        }
+      })
+      .catch((err) => console.error("Error al obtener los productos:", err))
+      .finally(() => setCargando(false));
+  }, [categoria]);
 
-  if(cargando){
-    return (
-      <h3>cargando...</h3>
-    )
+  if (cargando) {
+    return <h2>Cargando....</h2>;
   }
-  
-  return (
-    <div className='catalogo'>
-      <ItemList items={items}/>
-    </div>
-  )
-}
 
-export default ItemListContainer
+  return (
+    <div className='flex p-10 gap-2 justify-center'>
+      <ItemList items={items} />
+    </div>
+  );
+};
+
+export default ItemListContainer;

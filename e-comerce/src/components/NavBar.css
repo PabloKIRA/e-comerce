@@ -1,0 +1,121 @@
+.nav-logo {
+    height: 100px; 
+    width: auto;  
+    margin-right: 10px;
+  }
+  /* NavBar.css */
+nav {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 20px; 
+    background-color: hsl(210, 47%, 26%); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .nav-logo {
+    height: 50px; 
+    width: auto; 
+    margin-right: 20px; 
+  }
+  
+  nav a {
+    text-decoration: none; 
+    color: #333; 
+    margin-right: 20px; 
+    font-size: 16px; 
+  }
+  
+  nav a:hover {
+    color: #007bff; 
+  }
+  
+  .cart-widget {
+    margin-left: auto; 
+  }
+  /* NavBar.css */
+
+/* Estilos generales para el contenedor de la navegación */
+nav {
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  height: auto; /* Ajusta la altura según sea necesario */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #333; /* Fondo oscuro para contraste */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fija la barra en la parte superior */
+  top: 0; /* Posición en la parte superior */
+  left: 0; /* Asegura que inicie desde la izquierda */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Asegura que el contenido del body comience después de la navbar */
+body {
+  margin-top: 60px; /* Ajusta según la altura de la navbar */
+}
+
+/* Estilos para el logo */
+.nav-logo {
+  height: 50px; /* Tamaño del logo */
+  cursor: pointer; /* Cursor de puntero sobre el logo */
+
+
+}
+
+/* Contenedor de enlaces de navegación */
+.nav-links {
+  display: flex;
+  gap: 15px; /* Espaciado entre enlaces */
+}
+
+/* Estilos para los enlaces de navegación */
+nav a {
+  color: #06255e; /* Color de texto blanco para contraste */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: 500; /* Negrita para mayor visibilidad */
+  transition: color 0.3s ease; /* Transición suave en hover */
+}
+
+/* Efecto hover para los enlaces */
+nav a:hover {
+  color: #2f81fd; /* Cambiar el color al pasar el mouse */
+}
+
+/* Estilos para el widget del carrito */
+.cart-widget {
+  display: flex;
+  align-items: center;
+  color: #0c0c0c; /* Color del icono del carrito */
+  cursor: pointer; /* Cursor de puntero sobre el carrito */
+  transition: transform 0.3s ease; /* Animación suave al pasar el mouse */
+}
+
+/* Efecto hover para el carrito */
+.cart-widget:hover {
+  transform: scale(1.1); /* Efecto de escala en hover */
+}
+
+
+
+
+
+/* Responsividad: Estilos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Ocultar los enlaces por defecto */
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* Ajusta según el tamaño del nav */
+    left: 0;
+    right: 0;
+    background-color: #333; /* Mismo fondo que el nav */
+    padding: 10px 20px;
+  }
+
+  .nav-links.active {
+    display: flex; /* Mostrar el menú cuando está activo */
+  }
+
+}

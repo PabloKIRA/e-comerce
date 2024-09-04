@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
-import { Button } from './Button';
-import ItemDetailContainer from './ItemDetailContainer';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+// import Button from 'react-bootstrap/Button';
+import './itemCount.css'
+import { Button } from '../Button'
+import { ItemList } from '../ItemList'
 
-export const Item = ({ producto }) => {
-  const [isVisible, setIsVisible] = useState(false);
+export const ItemCount = ({handleAddToCart}) => {
+    const [ count, setCount ] = useState(1)
+    
 
-  const mostrarDetalles = () => {
-    setIsVisible(true);
-  };
+ const restar = () =>{
+    setCount(count - 1)
+}
+
+const sumar  = ()=> {
+    setCount(count + 1)
+ }
+
 
   return (
-    <div className='cardReal'>
-      <h3>{producto.nombre}</h3>
-      {/* <img src={producto.image} alt="foto del producto" /> */}
-      <p>{producto.precio}</p>
-      <p>{producto.categoria}</p>
-      <img src={producto.image} alt="" />
-      <Button color="blue" funcion={mostrarDetalles}> 
-        <Link to={`/detalle/${producto.id}`}>Ver Mas </Link> 
-      </Button>
-      {
-        isVisible ? <ItemDetailContainer id={producto.id} /> : <p>dale clickea el boton</p>
-      }
+    <div className='container'>
+        <Button variant='primary' funcion={restar} >  -   </Button> 
+        <p>{count}</p>
+        <Button color="green" funcion={sumar} >
+          +
+        </Button>
+        <button onClick={()=>handleAddToCart(count)}> Agregar Al Carrito </button>
     </div>
-  );
-};
+  )
+}

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
+import { Link } from 'react-router-dom'
 
 const CartWidget = () => {
+
+  const {cart} = useContext(CartContext)
+
   return (
-    <div>🛒</div>
+    <Link to='/cart'>
+    <div>🛒
+      <span>{cart.length}</span>
+    </div>
+    </Link>
   )
 }
 
