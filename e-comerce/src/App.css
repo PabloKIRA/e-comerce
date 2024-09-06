@@ -1,6 +1,6 @@
 :root {
   --fondo-nav: #d4dff3;
-  --fondo-card: #1c71aa;
+  --fondo-card: #f5f5f5;
 }
 
 nav {
@@ -21,7 +21,7 @@ nav {
   width: 300px;
   height: 400px;
   border-radius: 5%;
-  background-color: var(--fondo-card);
+  background-color:aqua;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,20 +84,12 @@ nav {
 .item h3 {
   font-size: 1.2rem;
   margin: 0; /* Elimina márgenes para un ajuste más limpio */
-  color: #333;
+  color: hsl(0, 0%, 100%);
 }
 
 .item p {
-  color: #555;
+  color: #ffffff;
   margin: 0; /* Ajusta márgenes para mantener el diseño ordenado */
   font-size: 0.9rem; /* Tamaño de fuente ajustado */
 }
 
-.item .price {
-  font-weight: bold; /* Resalta el precio */
-  color: #e60023; /* Color destacado para el precio */
-}
-
-.item .stock {
-  color: #28a745; /* Color verde para mostrar que hay stock */
-}

@@ -1,64 +1,82 @@
-import React, { useContext, useState } from 'react'
-import { CartContext } from '../context/CartContext'
-import { addDoc, collection } from 'firebase/firestore'
-import { db } from '../servicios/firebaseConfig'
+import React, { useContext, useState } from 'react';
+import { CartContext } from '../context/CartContext';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../servicios/firebaseConfig';
 
 const Checkout = () => {
-    const [nombre, setNombre] = useState("")
-    const [mail, setMail] = useState("")
-    const [direccion, setDireccion] = useState("")
-    const [order, setOrder] = useState(null) // Cambiar a null inicialmente para mejor manejo de estado
+  const [nombre, setNombre] = useState('');
+  const [mail, setMail] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [order, setOrder] = useState({});
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    const { cart, vaciarCart } = useContext(CartContext)
+  const { cart } = useContext(CartContext);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!nombre || !mail || !direccion) {
+      setError('Por favor, complete todos los campos');
+      return;
+    }
+    setLoading(true);
+    try {
+      const user = {
+        nombre,
+        mail,
+        direccion,
+      };
+      const data = { user, cart };
+      const orderRef = collection(db, 'ordenes');
+      const orderId = await addDoc(orderRef, data);
+      setOrder(orderId);
+      setLoading(false);
+    } catch (error) {
+      setError('Error al procesar la orden');
+      setLoading(false);
+    }
+  };
 
-        // Validación de campos
-        if (!nombre || !mail || !direccion) {
-            alert("Por favor, completa todos los campos.")
-            return
-        }
+  return (
+    <div>
+      <form className="flex flex-col" onSubmit={handleSubmit}>
+        <span>Nombre</span>
+        <input
+          type="text"
+          className="border border-black mx-3 text-black"
+          onChange={(e) => setNombre(e.target.value)}
+        />
+        <span>Mail</span>
+        <input
+          type="email"
+          className="border border-black mx-3 text-black"
+          onChange={(e) => setMail(e.target.value)}
+        />
+        <span>Direccion</span>
+        <input
+          type="text"
+          className="border border-black mx-3 text-black"
+          onChange={(e) => setDireccion(e.target.value)}
+        />
+        {error && (
+          <p style={{ color: 'red' }}>{error}</p>
+        )}
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          disabled={loading}
+          loading={loading}
+        >
+          {loading ? 'Procesando...' : 'Confirmar orden'}
+        </button>
+      </form>
+      {order && (
+        <p>
+          ¡Orden confirmada! Número de orden: <strong>{order.id}</strong>
+        </p>
+      )}
+    </div>
+  );
+};
 
-        const user = {
-            nombre,
-            mail,
-            direccion
-        }
-        
-        const data = { user, cart }
-        
-        try {
-            const orderRef = collection(db, "ordenes")
-            const orderDoc = await addDoc(orderRef, data)
-            
-            setOrder(orderDoc.id)  // Aquí se obtiene el ID correctamente
-
-            // Vaciar el carrito después de la compra
-            vaciarCart()
-
-            // Mostrar un mensaje de éxito
-            alert(`Orden confirmada. Su número de orden es: ${orderDoc.id}`)
-        } catch (error) {
-            console.error("Error al crear la orden:", error)
-            alert("Hubo un error al procesar tu orden. Por favor, intenta de nuevo.")
-        }
-    }   
-    
-    return (
-        <div>
-            <form className='flex flex-col' onSubmit={handleSubmit}>
-                <span>Nombre</span>
-                <input type="text" className='border border-black mx-3 text-black' onChange={(e) => setNombre(e.target.value) }/>    
-                <span>Mail</span>
-                <input type="email" className='border border-black mx-3 text-black' onChange={(e) => setMail(e.target.value)}/>    
-                <span>Dirección</span>
-                <input type="text" className='border border-black mx-3 text-black' onChange={(e) => setDireccion(e.target.value)}/>    
-                <button type='submit'>Confirmar</button>
-            </form>  
-            {order && <p>Su orden ha sido confirmada. ID de la orden: {order}</p>} 
-        </div>
-    )
-}
-
-export default Checkout
+export default Checkout;

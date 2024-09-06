@@ -72,4 +72,3 @@ export const getProductById = (id) =>{
         }, 50);
     })
 }
-
